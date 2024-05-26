@@ -1,54 +1,8 @@
-// const pool = require("../config/config.js");
-// const bcrypt = require("bcrypt");
-// const salt = bcrypt.genSaltSync(10);
-// // ROUTE HANDLER
-
-// const register = (req, res, next) => {
-//   const { email, password, role } = req.body;
-//   //  CEK EMAIL TERDAFTAR
-//   const sql = `SELECT * FROM users WHERE email = $1
-//   `;
-
-//   pool.query(sql, [email], (err, result) => {
-//     if (err) {
-//       console.log(err);
-//       res.status(500).json({ message: "Something went wrong" });
-//     } else {
-//       const foundUser = result.rows[0];
-//       if (!foundUser) {
-//         // REGSISTER USER
-//         const insertSql = `INSERT INTO users(email, password, role) VALUES ($1, $2, $3)
-//         RETURNING *
-//         `;
-
-//         pool.query(insertSql, [email, bcrypt.hashSync(password, salt)], (err, result) => {
-//           if (err) {
-//             res.status(500).json({ message: "Something went wrong" });
-//           } else {
-//             // SUCCESS
-//             res.status(201).json(result.rows[0]);
-//           }
-//         });
-//       } else {
-//         // ERROR
-//         res.status(400).json({ message: "Email allready exist" });
-//       }
-//     }
-//   });
-// };
-
-// const login = (req, res, next) => {
-//   // const { email, password } = req.body;
-// };
-
-// module.exports = { register, login };
-
 const pool = require("../config/config.js");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const { generateToken, verifyToken } = require("../lib/jwt");
 
-// ROUTE HANDLER
 const register = async (req, res, next) => {
   const { email, password, role } = req.body;
 

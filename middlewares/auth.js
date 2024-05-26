@@ -2,39 +2,6 @@ const pool = require("../config/config.js");
 const { verifyToken } = require("../lib/jwt");
 
 // CEK LOGIN/BELUM
-// const authentication = (req, res, next) => {
-//   if (req.headers.authorization) {
-//     const accessToken = req.headers.authorization.split(" ")[1];
-//     if (accessToken) {
-//       const decoded = verifyToken(accessToken);
-
-//       const sql = `SELECT * FROM users WHERE id = $1`;
-
-//       pool.query(sql, [decoded.id], (err, result) => {
-//         if (err) {
-//           console.log(err);
-//           res.status(500).json({ message: "Something went wrong" });
-//         } else {
-//           const foundUser = result.rows[0];
-//           if (!foundUser) {
-//             res.status(400).json({ message: "User not found" });
-//           } else {
-//             req.loggedUser = {
-//               id: foundUser.id,
-//               email: foundUser.email,
-//               role: foundUser.role,
-//             };
-//             next();
-//           }
-//         }
-//       });
-//     } else {
-//       res.status(400).json({ message: "Unauthorized 1" });
-//     }
-//   } else {
-//     res.status(400).json({ message: "Unauthorized 2" });
-//   }
-// };
 
 const authentication = (req, res, next) => {
   if (req.headers.authorization) {
@@ -70,19 +37,11 @@ const authentication = (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized: No token provided" });
     }
   } else {
-    return res.status(401).json({ message: "Unauthorized: No authorization header" });
+    return res.status(401).json({ message: "Unauthorized: No authorization header ini ya" });
   }
 };
 
 // CEK ROLE USER
-// const authorization = (req, res, next) => {
-//   const { role } = req.loggedUser;
-//   if (role === "admin") {
-//     next();
-//   } else {
-//     res.status(401).json({ message: "Unauthorized 3" });
-//   }
-// };
 
 const authorization = (req, res, next) => {
   if (req.loggedUser && req.loggedUser.role) {
